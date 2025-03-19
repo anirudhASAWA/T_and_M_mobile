@@ -1,0 +1,149 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#ffffff">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Time and Motion Study</title>
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Time Motion Study">
+  <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+<!-- Add these meta tags in the <head> section -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Update your container structure to use sections with IDs -->
+    <div class="container">
+      <h1>Time and Motion Study</h1>
+      
+      <!-- Add Process Form -->
+      <div class="form-group">
+        <input type="text" id="processInput" placeholder="Enter process name">
+        <div class="button-group">
+          <button id="addProcessBtn" class="btn-primary">Add Process</button>
+          <button id="updateProcessBtn" class="btn-success" style="display: none;">Update Process</button>
+          <button id="cancelEditBtn" class="btn-secondary" style="display: none;">Cancel</button>
+        </div>
+      </div>
+      
+      <!-- Process Table -->
+      <section id="processSection" class="section-expanded">
+        <div class="section-header">
+          <h2>Processes</h2>
+          <div class="button-group">
+            <button id="exportBtn" class="btn-success">Export to Excel</button>
+            <button id="saveBackupBtn" class="btn-secondary">Save Backup</button>
+          </div>
+          <span class="toggle-icon">▲</span>
+        </div>
+        
+        <div class="section-content">
+          <div class="process-table-container table-container">
+            <table id="processTable">
+              <thead>
+                <tr>
+                  <th>Process</th>
+                  <th>Timer</th>
+                  <th>Controls</th>
+                  <th colspan="2">Subprocesses</th>
+                </tr>
+              </thead>
+              <tbody id="processTableBody">
+                <!-- Processes will be added here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Recorded Times -->
+      <section id="recordedTimesSection">
+        <div class="section-header" onclick="toggleSection('recordedTimesSection')">
+          <h2>Recorded Times</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+          <div class="recorded-times">
+            <table id="recordedTimesTable">
+              <thead>
+                <tr>
+                  <th>Process</th>
+                  <th>Subprocess</th>
+                  <th>Time</th>
+                  <th class="mobile-collapse">Activity Type</th>
+                  <th class="mobile-collapse">Persons</th>
+                  <th class="mobile-collapse">Remarks</th>
+                  <th class="mobile-collapse">Start Time</th>
+                  <th class="mobile-collapse">End Time</th>
+                  <th class="mobile-collapse">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="recordedTimesTableBody">
+                <!-- Recorded times will be added here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Instructions -->
+      <section id="instructionsSection">
+        <div class="section-header" onclick="toggleSection('instructionsSection')">
+          <h3>How to use</h3>
+          <span class="toggle-icon">▼</span>
+        </div>
+        
+        <div class="section-content">
+          <ol>
+            <li>Add a process using the input field at the top</li>
+            <li>For each process, add the required subprocesses</li>
+            <li>Click the "Start" button to begin timing</li>
+            <li>For each subprocess, specify:
+              <ul>
+                <li>Activity Type (VA/NVA)</li>
+                <li>Remarks for additional information</li>
+                <li>Number of persons required</li>
+              </ul>
+            </li>
+            <li>When a subprocess is completed, click its "Lap" button</li>
+            <li>You can record multiple lap readings for the same subprocess</li>
+            <li>Click "Reset" to reset the timer (your data will be preserved)</li>
+            <li>Click "Export to Excel" to save all your recorded data</li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
+  <!-- File Import UI (initially hidden) -->
+  <div id="fileImportModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeImportModal()">&times;</span>
+      <h3>Import Backup File</h3>
+      <input type="file" id="backupFileInput" accept=".json">
+      <div class="button-group">
+        <button onclick="processBackupFile()" class="btn-primary">Import</button>
+        <button onclick="closeImportModal()" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  // Update the subprocess row HTML in the renderProcesses function
+  
+  <!-- Include Excel library and app script -->
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
